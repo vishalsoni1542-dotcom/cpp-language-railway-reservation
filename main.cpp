@@ -77,7 +77,7 @@ class Train
         return trainTime;
     }
 
-    void addTrain(inputTrainDetails){
+    void inputTrainDetails(){
         cout << "ENTER THE TRAIN NUMBER : " <<endl;
         cin >> trainNumber;
 
@@ -96,15 +96,15 @@ class Train
 
     void displayTrainsDetails(){
 
-        cout << "ENTER THE TRAIN NUMBER : " <<endl;
+        cout << "TRAIN NUMBER : " << trainNumber << endl;
+
+        cout << "TRAIN NAME : " << trainName << endl;
+
+        cout << "SOURCE : " << source << endl;
+
+        cout << "DESTINATION : " << destination << endl;
         
-        cout << "ENTER THE TRAIN NAME : " <<endl;
-        
-        cout << "ENTER THE SOURCE : " <<endl;
-        
-        cout << "ENTER THE DESTINATION : " <<endl;
-        
-        cout << "ENTER THE TRAIN TIME : " <<endl;
+        cout << "TRAIN TIME : " << trainTime << endl;
     }
 
     static int getTrainCount(){
@@ -113,16 +113,75 @@ class Train
 
 };
 
+    int Train::TrainCount = 0;
+
 class RailwaySystem{
 
-    private: 
-    Train train[100];
-    int totalTrains=0;
+    private:
 
-}
+        Train train[100];
+        int totalTrains=0;
+
+    public:
+    
+        void addTrain(){
+            train[totalTrains].inputTrainDetails();
+               totalTrains++;
+        }
+
+        void displayAllTrains(){
+            for(int i=0; i<totalTrains; i++){
+                train[i].displayTrainsDetails();
+            }
+        }
+
+        void searchTrainByNumber(int number){
+            for(int i=0; i<totalTrains; i++){
+                if(number == train[i].get_trainNumber()){
+                    train[i].displayTrainsDetails();
+                }
+            }
+        }
+};
 
 int main(){
 
-    int train::trainCount = 0;
+    RailwaySystem rl;
+    
+    int choice;
+
+    do{
+        cout << "--- Railway Reservation System Menu ---" <<endl; 
+        cout << "1. Add Train :" <<endl;
+        cout << "2. Display All Trains" <<endl;
+        cout << "3. Search Train by Number" <<endl;
+        cout << "4. Exit" <<endl;
+
+
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        if(choice == 1){
+            rl.addTrain();
+        }
+        else if(choice == 2){
+            rl.displayAllTrains();
+        }
+        else if(choice == 3){
+            int number;
+            cout << "Enter the train number to search: ";
+            cin >> number;
+            rl.searchTrainByNumber(number);
+        }
+        else if(choice == 4){
+            cout << "Exit the program." <<endl;
+        }
+        else{
+            cout << "Invalid choice." <<endl;
+        }
+
+    }while(choice != 4);
+
     return 0;
+
 }
